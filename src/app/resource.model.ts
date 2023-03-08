@@ -1,9 +1,19 @@
 export abstract class ResourceModel<T> {
-    public _id!: string;
-  
+    public id!: number;
+    public createdAt?: Date;
+    public updatedAt?: Date;
+
+
     constructor(model: Partial<T>) {
       if (model) {
         Object.assign(this, model);
+      }
+
+      if (this.createdAt) {
+        this.createdAt = new Date(this.createdAt);
+      }
+      if (this.updatedAt) {
+        this.updatedAt = new Date(this.updatedAt);
       }
     }
   

@@ -29,7 +29,7 @@ export class EmployeeListComponent implements OnInit {
 
   getAllEmps() {
     this.message = 'Loading..';
-    this.employeeService.getEmployees().subscribe(
+    this.employeeService.list().subscribe(
       (employees: Employee[]) => {
         this.Employees = employees;
         this.message = '';
