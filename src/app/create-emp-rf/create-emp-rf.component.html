@@ -1,0 +1,76 @@
+<h2 class="text-center mt-0">Reactive Form</h2>
+<div class="grid">
+  <div class="col-12 lg:col-6 mb-4">
+    <p-card [header]="update ? 'Create Employee':'Edit Employee'">
+      <form [formGroup]="empForm" (ngSubmit)="onsubmit()">
+        <div class="field">
+          <h6 class="font-bold" for="name">Name</h6>
+          <div>
+            <input type="text" pInputText class="w-full" id="name" formControlName="Name"
+              placeholder="Enter Employee Name" required (input)="isTyping = true" (blur)="isTyping = false">
+            <div class="text-red-500 py-2"
+              *ngIf="empForm.get('Name')?.invalid && (empForm.get('Name')?.dirty || empForm.get('Name')?.touched)"
+              style="color: red;">
+              *Name is required</div>
+          </div>
+        </div>
+        <div class="field">
+          <h6>Gender</h6>
+          <div class="field-checkbox">
+            <input type="radio" id="genderm" formControlName="Gender" value="Male" (input)="isTyping = true" (blur)="isTyping = false">
+            <label for="genderm">
+              Male
+            </label>
+          </div>
+          <div class="field-checkbox">
+            <input type="radio" id="genderf" formControlName="Gender" value="Female" (input)="isTyping = true" (blur)="isTyping = false">
+            <label for="genderf">
+              Female
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <h6 class="font-bold" for="phone">Phone</h6>
+          <div>
+            <input type="text" id="phone" pInputText class="w-full" formControlName="Phone"
+              placeholder="Enter Employee Phone"
+              onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))"
+              required (input)="isTyping = true" (blur)="isTyping = false">
+            <!-- <p-inputNumber id="phone" formControlName="Phone" placeholder="Enter Employee Phone"
+              ></p-inputNumber> -->
+            <div class="text-red-500 py-2"
+              *ngIf="empForm.get('Phone')?.invalid && (empForm.get('Phone')?.dirty || empForm.get('Phone')?.touched)" style="color: red;">
+              *Phone
+              is required</div>
+          </div>
+        </div>
+        <div class="field">
+          <h6 class="font-bold" for="email">Email
+          </h6>
+          <div>
+            <input type="email" pInputText class="w-full" pattern='^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$'
+              id="email" formControlName="Email" placeholder="Enter Employee Email" required (input)="isTyping = true"
+              (blur)="isTyping = false">
+            <div class="text-red-500 py-2"
+              *ngIf="empForm.get('Email')?.invalid && (empForm.get('Email')?.dirty || empForm.get('Email')?.touched)"
+              style="color: red;">
+              *Enter valid email</div>
+          </div>
+        </div>
+        <div class="field">
+          <button type="submit" pButton label="{{'Save'}}" class="w-full" [disabled]="empForm.invalid"
+            *ngIf="update"></button>
+          <button type="submit" pButton label="{{'Update'}}" class="w-full" [disabled]="empForm.invalid"
+            *ngIf="!update"></button>
+        </div>
+      </form>
+    </p-card>
+  </div>
+  <div class="col-12 lg:col-6 mb-4">
+    <p-card header="Form Status: {{empForm.status}}" [ngClass]="{'valid' : empForm.status == 'VALID'}">
+      <div class="py-3" [ngClass]="{'updated': isTyping}">
+        <pre>{{empForm.value | json}}</pre>
+      </div>
+    </p-card>
+  </div>
+</div>
