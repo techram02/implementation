@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-
 import { Employee } from '../Employee';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeeService } from '../employee.service';
 
 @Component({
@@ -10,7 +9,6 @@ import { EmployeeService } from '../employee.service';
   templateUrl: './create-emp-rf.component.html',
   styleUrls: ['./create-emp-rf.component.css']
 })
-
 export class CreateEmpRFComponent implements OnInit {
   isTyping: boolean = false;
 
@@ -22,9 +20,9 @@ export class CreateEmpRFComponent implements OnInit {
     Phone: '',
     Email: ''
   };
-
   update: boolean | undefined;
   constructor(private fb: FormBuilder,
+    // private employeeService: EmployeeService,
     private employeeService: EmployeeService,
     private route: ActivatedRoute,
     private router: Router) {
@@ -32,6 +30,7 @@ export class CreateEmpRFComponent implements OnInit {
 
   ngOnInit() {
     this.empForm = this.fb.group({
+      id:[],
       Name: ['', Validators.required],
       Gender: ['Male'],
       Phone: ['', Validators.required],
@@ -47,7 +46,9 @@ export class CreateEmpRFComponent implements OnInit {
         } else {
           this.update = true;
         }
-      });
+      }
+    );
+
   }
 
   getEmployee(id: number) {
@@ -63,6 +64,7 @@ export class CreateEmpRFComponent implements OnInit {
 
   setEmployeeModel(employee: Partial<Employee>) {
     this.empForm.patchValue({
+      id: employee.id,
       Name: employee.Name,
       Gender: employee.Gender,
       Phone: employee.Phone,
@@ -96,6 +98,7 @@ export class CreateEmpRFComponent implements OnInit {
   }
 
   mapFormValuesToEmployeeModel() {
+    this.employee.id = this.empForm.value.id; // added
     this.employee.Name = this.empForm.value.Name;
     this.employee.Gender = this.empForm.value.Gender;
     this.employee.Phone = this.empForm.value.Phone;
@@ -103,6 +106,7 @@ export class CreateEmpRFComponent implements OnInit {
   }
   onChange(e:Event) {
     this.isTyping = true;
+    console.log('asdasd', this.isTyping);
     setTimeout(() => {
       this.isTyping = false;
     }, 100);

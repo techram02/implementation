@@ -3,6 +3,17 @@
   <div class="col-12 lg:col-6 mb-4">
     <p-card [header]="update ? 'Create Employee':'Edit Employee'">
       <form [formGroup]="empForm" (ngSubmit)="onsubmit()">
+         <div class="field">
+          <h6 class="font-bold" for="name">Id</h6>
+          <div>
+            <input type="text" pInputText class="w-full" id="id" formControlName="id"
+              placeholder="Enter Employee Id"  readonly (input)="isTyping = true" (blur)="isTyping = false">
+            <div class="text-red-500 py-2"
+              *ngIf="empForm.get('id')?.invalid && (empForm.get('id')?.dirty || empForm.get('id')?.touched)"
+              style="color: red;">
+              *ID is required</div>
+          </div>
+        </div> 
         <div class="field">
           <h6 class="font-bold" for="name">Name</h6>
           <div>

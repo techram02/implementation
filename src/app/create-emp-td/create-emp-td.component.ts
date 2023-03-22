@@ -83,6 +83,7 @@ export class CreateEmpTDComponent implements OnInit {
   }
   onChange(e:Event) {
     this.isTyping = true;
+    console.log('asdasd', this.isTyping);
     setTimeout(() => {
       this.isTyping = false;
     }, 100);

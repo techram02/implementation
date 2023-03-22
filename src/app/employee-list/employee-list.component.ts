@@ -23,15 +23,20 @@ export class EmployeeListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getEmployees();
+    this.getAllEmps();
   }
 
-  getEmployees() {
+  getAllEmps() {
     this.message = 'Loading..';
-    this.employeeService.getEmployeeList().subscribe(
+    this.employeeService.list().subscribe(
       (employees: Employee[]) => {
         this.Employees = employees;
+        console.log("employee[2].ID " + employees[2].id);
         this.message = '';
+      },
+      err => {
+        this.message = err.message;
+        console.error(err);
       }
     );
   }
@@ -44,7 +49,7 @@ export class EmployeeListComponent implements OnInit {
     }
   }
 
-  deleteEmployee(id: number, event: Event) {
+  deleteEmp(id: number, event: Event) {
     this.confirmationService.confirm({
       target: event?.target as EventTarget,
       message: `Are you sure you want to Delete?`,
@@ -56,8 +61,12 @@ export class EmployeeListComponent implements OnInit {
             summary: "Deleted!",
             detail: "Employee Deleted Successfully"
           });
-          this.getEmployees();
-        });
+          this.getAllEmps();
+        },
+          err => {
+            console.error(err);
+          }
+        );
 
       },
       reject: () => {
@@ -69,8 +78,8 @@ export class EmployeeListComponent implements OnInit {
       }
     });
   }
-  editEmployee(id: number) {
-    console.log(id);
+  editEmp(id: number) {
+    console.log("ID is " + id);
     this.employeeService.getEmployee(id).subscribe((res: any) => {
       this.router.navigate([`../editrf/` + id], { relativeTo: this.route });
     })

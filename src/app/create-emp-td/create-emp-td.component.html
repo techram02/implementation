@@ -4,6 +4,16 @@
     <p-card [header]="update ? 'Create Employee':'Edit Employee'">
       <form #fm="ngForm" (ngSubmit)="onsubmit()">
         <div class="field">
+          <h6 for="name" class="font-bold">id
+          </h6>
+          <div>
+            <input type="text" id="name" pInputText class="w-full" [(ngModel)]="employee.id" name="id"
+              placeholder="Enter Employee id" #id="ngModel" readonly (input)="isTyping = true "
+              (blur)="isTyping = false">
+            <div class="text-red-500 py-2" *ngIf="name.invalid && (name.dirty || name.touched)">id is required</div>
+          </div>
+        </div>
+        <div class="field">
           <h6 for="name" class="font-bold">Name
           </h6>
           <div>
